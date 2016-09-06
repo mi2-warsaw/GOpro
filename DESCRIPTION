@@ -1,0 +1,25 @@
+Package: GOpro
+Type: Package
+Title: Finds the most characteristic gene ontology terms for groups of genes
+Version: 0.1
+Date: 2016-08-31
+Author: Lidia Chrabaszcz
+Maintainer: Lidia Chrabaszcz <chrabaszcz.lidia@gmail.com>
+Description: Finds the most characteristic gene ontology terms for groups of genes.
+License: GPL-3
+Imports:
+    AnnotationDbi,
+    dendextend,
+    doParallel,
+    foreach,
+    parallel,
+    org.Hs.eg.db,
+    GO.db,
+    Rcpp,
+    RTCGA.PANCAN12
+LinkingTo: Rcpp, BH
+RoxygenNote: 5.0.1
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
+LazyData: true

@@ -1,0 +1,17 @@
+#' GOpro: find the most characteristic gene ontology terms for groups of genes
+#'
+#' Finds the most characteristic gene ontology terms for groups of genes
+#'
+#' @docType package
+#' @name GOpro
+#' @useDynLib GOpro
+#' @import AnnotationDbi
+#' @import dendextend
+#' @import doParallel
+#' @import foreach
+#' @import parallel
+#' @import org.Hs.eg.db
+#' @import GO.db
+#' @import RTCGA.PANCAN12
+#' @importFrom  Rcpp sourceCpp
+NULL
