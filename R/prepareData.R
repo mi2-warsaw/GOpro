@@ -13,7 +13,7 @@
 #'
 #' @export
 #'
-#' @import  RTCGA.PANCAN12
+#' @import RTCGA.PANCAN12
 
 prepareData <- function(RTCGA = FALSE, cohorts = c('colon', 'bladder', 'leukemia'), data = NULL)
 {
@@ -25,7 +25,10 @@ prepareData <- function(RTCGA = FALSE, cohorts = c('colon', 'bladder', 'leukemia
 
   if (RTCGA == TRUE)
   {
-    library(RTCGA.PANCAN12)
+    library('RTCGA.PANCAN12')
+    data(expression.cb1)
+    data(expression.cb2)
+    data(clinical.cb)
     expr.all <- rbind(expression.cb1, expression.cb2)
     rownames(expr.all) <- NULL
     clinical <- clinical.cb
