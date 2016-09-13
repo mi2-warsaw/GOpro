@@ -7,7 +7,8 @@
 findGO(groups, topAOV = 50, sig.levelAOV = 0.1, parallel = FALSE,
   grouped = "tukey", sig.levelGO = 0.1, minGO = 5, maxGO = 500,
   clust.metric = NULL, clust.method = NULL, dist.matrix = NULL,
-  topGO = 3, sig.levelTUK = 0.05, onto = c("MF", "BP", "CC"))
+  topGO = 3, sig.levelTUK = 0.05, onto = c("MF", "BP", "CC"),
+  extend = FALSE)
 }
 \arguments{
 \item{groups}{a list of data frames of gene expressions with genes in rows and samples in columns.
@@ -41,6 +42,8 @@ rows named with genes' aliases. The order of samples and genes has to be the sam
 
 \item{onto}{An ontology or ontologies to be searched for significant GO terms, at least one of 'MF' (molecular function),
 'BP' (biological process), and 'CC' (cellular component).}
+
+\item{extend}{A logical value indicating if an extended version of the output should be presented.}
 }
 \value{
 A data frame with top gene ontology terms for each group of genes and with aliases of these genes.
@@ -49,7 +52,6 @@ A data frame with top gene ontology terms for each group of genes and with alias
 Find top Gene Ontology terms for given genes.
 }
 \examples{
-findGO(exrtcga)
 findGO(exrtcga, grouped = 'clustering', topGO = 10, onto = 'MF')
 }
 

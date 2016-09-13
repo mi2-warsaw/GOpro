@@ -1,7 +1,6 @@
 ---
 title: "GOpro: Determine groups of genes and find their most characteristic GO term"
-author: "Lidia Chrabąszcz"
-date: "`r Sys.Date()`"
+author: "Lidia Chrabaszcz"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEncoding{UTF-8}
@@ -15,14 +14,15 @@ Next method provides finding the most characteristic GO terms (biological functi
 
 ## Data
 
-Data used in this example come from [The Cancer Genome Atlas](https://tcga-data.nci.nih.gov/tcga/). They are loaded via RTCGA.PANCAN12 package. The data represent expressions of 16115 genes determined for each patient (sample).  Four different medical conditions are included: acute myleoid leukemia, lung adenocarcinoma, lung squamous cell carcinoma, and endometrioid cancer.
+Data used in this example come from [The Cancer Genome Atlas](https://tcga-data.nci.nih.gov/tcga/). They were downloaded via RTCGA.PANCAN12 package. The data represent expressions of 300 genes randomly chosen from 16115 genes determined for each patient (sample).  Three different medical conditions are included: acute myleoid leukemia, colon cancer, and bladder cancer.
 
-First, load the package.
+First, load the GOpro package.
 ```{r, echo=TRUE, results='hide', cache=TRUE}
 library(GOpro)
 ```
-```{r, cache=TRUE, results='markup'}
-expr <- prepareData(RTCGA = TRUE, cohorts = c('lung adenocarcinoma', 'endometrioid', 'lung squamous carcinoma', 'leukemia'))
+
+```{r, cache=TRUE, results='hide', message=FALSE}
+expr <- exrtcga
 ```
 
 An example of the data:
@@ -31,8 +31,7 @@ expr[[1]][1:5, 1:5]
 ```
 
 ## Example 
-Genes for which any observation is not available data are omitted to simplify this example. Alternatively, imputation techinques might be used to replace NA observations.
-Genes aliases must be used as genes names and they must be arranged in the same order for each medical group. Genes must be stored in columns and patients (samples) in rows. Data frames of genes and patients observations must be arranged into a list. The length of list should be consistent with the number of different medical groups.
+Genes aliases must be used as genes names and they must be arranged in the same order for each group. Genes must be stored in rows and probes (samples) in columns. Data frames of genes and patients observations must be arranged into a list. The length of the list should be consistent with the number of data frames (different groups of probes).
 
 Having in mind that data should be normally distributed, the analysis of variance test is conducted by function *aovTopTest*. The *top* parameter denotes the number of significantly different genes to be given by this function. In the case of ties, all genes for which the p-value of the test is the same as for the last *top* are included in the result. 
 ```{r, echo=FALSE, results='hide', cache=TRUE, message = FALSE}
@@ -48,10 +47,10 @@ The third element of the list is presented below.
 ```{r, results='markup', cache=TRUE, echo=TRUE}
 tukey.results[[3]] 
 ```
-The next step is to find all GO terms annotated with each of the gene groups. The *min* and *max* parameter denote the range of counts of genes annotated with each GO term. All GO terms with counts above or below this range are omitted from the analysis. \bigskip
+The next step is to find all GO terms annotated with each of the gene groups. The *min* and *max* parameters denote the range of counts of genes annotated with each GO term. All GO terms with counts above or below this range are omitted from the analysis.
 For groups obtained from all pairwise comparisons.
 ```{r, results='markup', cache=TRUE, echo=TRUE, message = FALSE}
-all.gos <- findAllGOs(tukey.results, geneUni = rownames(expr[[1]]), onto = c('MF', 'BP', 'CC'), min = 7, max = 600)
+all.gos <- findAllGOs(tukey.results, geneUni = rownames(expr[[1]]), onto = c('MF', 'BP', 'CC'), min = 7, max = 400)
 ```
 A part of the result (first five lines of the second element of a returned list) is presented below. The first value in a row is a p-value of a Fisher's test not corrected for the number of comparisons within a group.
 ```{r, results='markup', cache=TRUE, echo=TRUE, message = FALSE}
@@ -69,7 +68,7 @@ The results of the analysis can be presented in a more descriptive way or in a c
 The concise way is obtained by using *GO* function (additionally information about p-values returned by *findTopGOs* are included). To get more descriptive results use *extendGO* function. First elements of the output are presented here.
 ```{r, results='markup', cache=TRUE, echo=TRUE, message = FALSE, tidy=TRUE}
 print(GO(all.gos, tukey.top))[1:2, ]
-extendGO(tukey.top)[1:2, ]
+#extendGO(tukey.top)[1:2, ]
 ```
 
 ### Hierarchical clustering
@@ -93,12 +92,12 @@ A part of the result (first three elements of a returned list) is presented here
 ```{r, results='markup', cache=TRUE, echo=TRUE, message = FALSE}
 cluster.top[1:3]
 ```
-The results of the analysis can be presented in a more descriptive way or in a concise one. \bigskip
-The concise way is obtained by using \textit{descGO} function (additionally information about p-values returned by *findTopGOs* are included). To get more descriptive results use \textit{extendGO} function.\bigskip
+The results of the analysis can be presented in a more descriptive way or in a concise one.
+The concise way is obtained by using *GO* function (additionally information about p-values returned by *findTopGOs* are included). To get more descriptive results use *extendGO* function.
 The first five rows of a result are presented below for each function.
 ```{r, results='markup', cache=TRUE, echo=TRUE, message = FALSE}
 print(GO(all.gos, cluster.top))[1:2, ]
-extendGO(cluster.top)[1:2, ]
+#extendGO(cluster.top)[1:2, ]
 ```
 In order to present the results graphically the following functions must be used.
 ```{r, results='markup', cache=TRUE, echo=TRUE, message = FALSE}
@@ -107,6 +106,6 @@ printout <- GO(all.gos, cluster.top)
 dendro <- geneclusterplot(printout, unbundled, cluster.top)
 ```
 The result of the clustering can be presented in the dendrogram. The parameter *over.represented* indicates if the dominant GO terms should be calculated and presented in the plot. The dominant GO term is the most frequently represented ontology by all GO terms characteristic for each node of the dendrogram.
-```{r, echo=TRUE, fig.height=10, fig.width=10, message = FALSE, results='hide', cache = TRUE}
-plotg(dendro, over.represented = TRUE)
+```{r, echo=TRUE, fig.height=6, fig.width=6, message = FALSE, results='hide', cache = TRUE}
+plotg(dendro, over.represented = FALSE)
 ```

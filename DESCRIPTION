@@ -1,12 +1,14 @@
 Package: GOpro
 Type: Package
-Title: Finds the most characteristic gene ontology terms for groups of genes
-Version: 0.1
+Title: Finds the most characteristic gene ontology terms for groups of human genes
+Version: 0.99.0
 Date: 2016-08-31
 Author: Lidia Chrabaszcz
 Maintainer: Lidia Chrabaszcz <chrabaszcz.lidia@gmail.com>
-Description: Finds the most characteristic gene ontology terms for groups of genes.
+Description: Finds the most characteristic gene ontology terms for groups of human genes. Based on the gene expressions find the structure somewhat comparable to gene signature. From all given genes, determine which are significantly different between sets. These sets may relate to different health conditions of patients, i.e. different types of cancer. Then divide interesting genes into subsets. Genes belong to a particular subset if they share the same feature. Theere are two implemented methods that can be used to create genes' subsets. The first method is so-called all pairwise comparisons by Tukey's procedure. Genes that have the same profile (a result of all comparisons) are assigned to one subset. The second way of determining subsets is a method of hierarchical clustering. When all genes are divided into subsets, then for each subset all relevant GO terms are searched for in org.Hs.eg.db database. Each found GO terms is tested using Fisher's test to find out which of them are the most characteristic for the given subset of genes. This package was created as a part of the thesis which was developed under the auspices of MI^2 Group (http://mi2.mini.pw.edu.pl/, https://github.com/geneticsMiNIng).
 License: GPL-3
+Depends:
+    R (>= 3.1)
 Imports:
     AnnotationDbi,
     dendextend,
@@ -15,11 +17,14 @@ Imports:
     parallel,
     org.Hs.eg.db,
     GO.db,
-    Rcpp,
-    RTCGA.PANCAN12
+    Rcpp
 LinkingTo: Rcpp, BH
 RoxygenNote: 5.0.1
 Suggests: knitr,
-    rmarkdown
+    rmarkdown,
+    RTCGA.PANCAN12
 VignetteBuilder: knitr
 LazyData: true
+biocViews: Annotation, Clustering, GO, GeneExpression, GeneSetEnrichment, MultipleComparison
+URL: https://github.com/lidiaad/GOpro
+BugReports: https://github.com/lidiaad/GOpro/issues

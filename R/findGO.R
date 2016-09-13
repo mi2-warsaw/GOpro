@@ -18,11 +18,11 @@
 #'@param sig.levelTUK A numeric value, a significance level used in Tukey's all pairwise comparison (\code{groupByTukey}).
 #'@param onto An ontology or ontologies to be searched for significant GO terms, at least one of 'MF' (molecular function),
 #''BP' (biological process), and 'CC' (cellular component).
+#'@param extend A logical value indicating if an extended version of the output should be presented.
 #'
 #' @return A data frame with top gene ontology terms for each group of genes and with aliases of these genes.
 #'
 #' @examples
-#' findGO(exrtcga)
 #' findGO(exrtcga, grouped = 'clustering', topGO = 10, onto = 'MF')
 #' @export
 #'
@@ -32,7 +32,7 @@
 
 findGO  <- function (groups, topAOV = 50, sig.levelAOV = 0.1, parallel = FALSE, grouped = "tukey",
                      sig.levelGO = 0.1, minGO = 5, maxGO = 500,  clust.metric = NULL, clust.method = NULL, dist.matrix = NULL,
-                     topGO = 3, sig.levelTUK = 0.05, onto = c('MF', 'BP', 'CC'))
+                     topGO = 3, sig.levelTUK = 0.05, onto = c('MF', 'BP', 'CC'), extend = FALSE)
 {
   aov.results <- aovTopTest(groups, topAOV, sig.levelAOV, parallel)
   geneUniverse <- rownames(groups[[1]])
@@ -45,7 +45,12 @@ findGO  <- function (groups, topAOV = 50, sig.levelAOV = 0.1, parallel = FALSE, 
     tukey.results <- groupByTukey(aov.results, parallel, sig.levelTUK)
     AllGOs <- findAllGOs(geneUniverse, tukey.results, onto, minGO, maxGO, parallel)
     TopGOs <- findTopGOs(AllGOs, sig.levelGO, topGO)
-    out <- extendGO(TopGOs)
+    if (extend == TRUE)
+    {
+      out <- extendGO(TopGOs)
+    } else {
+      out <- GO(AllGOs, TopGOs)
+    }
   }
   if (grouped == "clustering")
   {
@@ -55,7 +60,12 @@ findGO  <- function (groups, topAOV = 50, sig.levelAOV = 0.1, parallel = FALSE, 
     unbundled <- unbundleCluster(cluster.results)
     printout <- GO(all.gos, top.gos)
     plotg(geneclusterplot(printout, unbundled, top.gos), over.represented = FALSE)
-    out <- extendGO(top.gos)
+    if (extend == TRUE)
+    {
+      out <- extendGO(top.gos)
+    } else {
+      out <- GO(all.gos, top.gos)
+    }
   }
   out
 }

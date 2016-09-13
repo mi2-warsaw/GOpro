@@ -12,7 +12,6 @@
 #' @import parallel
 #' @import org.Hs.eg.db
 #' @import GO.db
-#' @import RTCGA.PANCAN12
 #' @importFrom  Rcpp sourceCpp
 #' @importFrom graphics legend plot text
 #' @importFrom stats TukeyHSD aggregate aov as.dendrogram dist hclust na.omit p.adjust
