@@ -26,5 +26,5 @@ Suggests: knitr,
 VignetteBuilder: knitr
 LazyData: true
 biocViews: Annotation, Clustering, GO, GeneExpression, GeneSetEnrichment, MultipleComparison
-URL: https://github.com/lidiaad/GOpro
-BugReports: https://github.com/lidiaad/GOpro/issues
+URL: https://github.com/mi2-warsaw/GOpro
+BugReports: https://github.com/mi2-warsaw/GOpro/issues
