@@ -2,7 +2,8 @@
 % Please edit documentation in R/unbundleCluster.R
 \name{unbundleCluster}
 \alias{unbundleCluster}
-\title{Find all groups - rearrange the dendrogram: find which elements were merged in each step.}
+\title{Find all groups - rearrange the dendrogram:
+ find which elements were merged in each step.}
 \usage{
 unbundleCluster(hc)
 }
@@ -10,13 +11,16 @@ unbundleCluster(hc)
 \item{hc}{An object of class hclust.}
 }
 \value{
-An object of class \code{genecluster}, a list of labels of elements that were merged in each step.
+An object of class \code{genecluster},
+ a list of labels of elements that were merged in each step.
 }
 \description{
-Find all groups - rearrange the dendrogram: find which elements were merged in each step.
+Find all groups - rearrange the dendrogram:
+ find which elements were merged in each step.
 }
 \examples{
-clusteredGenes <- clustering(exanova, clust.metric = 'manhattan', clust.method = 'average')
+clusteredGenes <- clustering(exanova,
+ clust.metric = 'manhattan', clust.method = 'average')
 unbundleCluster(clusteredGenes)
 
 }

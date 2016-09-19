@@ -7,10 +7,12 @@
 ontologyOver(extendedGO)
 }
 \arguments{
-\item{extendedGO}{A data frame with a one column of group and another column with GO term (returned by \code{extendGO}).}
+\item{extendedGO}{A data frame with a one column of group
+and another column with GO term (returned by \code{extendGO}).}
 }
 \value{
-A data frame with the most frequently occurring ontologies in each group.
+A data frame with the most frequently occurring
+ ontologies in each group.
 }
 \description{
 Calculate frequencies of each ontology in each group (CC, BP, MF).
@@ -18,7 +20,8 @@ Calculate frequencies of each ontology in each group (CC, BP, MF).
 \examples{
 tukey.results <- groupByTukey(exanova, sig.level = 0.1)
 # find all and then top GO terms
-# geneUniverse is a universe of all genes of interest, i.e. all genes measured by microarray
+# geneUniverse is a universe of all genes of interest,
+# i.e. all genes measured by microarray
 geneUniverse <- rownames(exrtcga[[1]])
 all.gos <- findAllGOs(geneUniverse, tukey.results)
 top.gos <- findTopGOs(all.gos, sig.level = 0.1, top = 3)

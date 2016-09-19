@@ -8,15 +8,19 @@ using Tukey's Honest Distance test.}
 TukeyCore(z, expr, group)
 }
 \arguments{
-\item{z}{A number of evaluation of the function needed for \code{foreach} package.}
+\item{z}{A number of evaluation of the function needed for
+\code{foreach} package.}
 
-\item{expr}{A list of data frames of gene expressions with genes in rows and samples in columns.
-the names of rows represent genes' aliases. The order of genes has to be the same for each data frame.}
+\item{expr}{A list of data frames of gene expressions
+with genes in rows and samples in columns.
+the names of rows represent genes' aliases.
+The order of genes has to be the same for each data frame.}
 
 \item{group}{A character name of a group of genes (a cohort).}
 }
 \value{
-A named vector of concatenated: mean value of observations by groups and the p-value of the Tukey HSD test.
+A named vector of concatenated: mean value of observations
+ by groups and the p-value of the Tukey HSD test.
 }
 \description{
 Core function for calculating p-values across all groups of genes

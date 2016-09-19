@@ -2,7 +2,8 @@
 % Please edit documentation in R/GO.R
 \name{print.GO}
 \alias{print.GO}
-\title{Print grouped genes with the information of the labels and GO term's IDs.}
+\title{Print grouped genes with the information of
+ the labels and GO term's IDs.}
 \usage{
 \method{print}{GO}(x, ...)
 }
@@ -12,10 +13,12 @@
 \item{...}{Additional arguments to be passed (not in use).}
 }
 \value{
-A data frame with labels, gene's aliases and GO terms for each group.
+A data frame with labels, gene's aliases
+ and GO terms for each group.
 }
 \description{
-Print grouped genes with the information of the labels and GO term's IDs.
+Print grouped genes with the information of
+ the labels and GO term's IDs.
 }
 \examples{
 clustered <- clustering(exanova)
@@ -23,7 +26,8 @@ genecl <- unbundleCluster(clustered)
 # find all and then top GO terms
 # geneUniverse is a universe of all genes of interest
 geneUniverse <- rownames(exrtcga[[1]])
-all.gos <- findAllGOs(geneUniverse, clustered, max = 300, onto = c('MF', 'BP'))
+all.gos <- findAllGOs(geneUniverse, clustered,
+ max = 300, onto = c('MF', 'BP'))
 top.gos <- findTopGOs(all.gos, sig.level = 0.05, top = 3)
 # create an object of class \\code{GO}
 printout <- GO(all.gos, top.gos)

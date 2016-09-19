@@ -2,7 +2,8 @@
 % Please edit documentation in R/groupByProfiles.R
 \name{groupByProfiles}
 \alias{groupByProfiles}
-\title{Genes grouped by profiles determined by the result returned from \code{tukeyHSDTest} function.}
+\title{Genes grouped by profiles determined by the result
+returned from \code{tukeyHSDTest} function.}
 \usage{
 groupByProfiles(expr, tukey.results, sig.level)
 }
@@ -11,12 +12,14 @@ groupByProfiles(expr, tukey.results, sig.level)
 
 \item{tukey.results}{A data frame returned by \code{TukeyHSDTest}.}
 
-\item{sig.level}{A numeric value, a significance level used in Tukey's all pairwise comparisons (\code{groupByTukey}).}
+\item{sig.level}{A numeric value, a significance level used in
+Tukey's all pairwise comparisons (\code{groupByTukey}).}
 }
 \value{
 A list of groups of genes named by profiles.
 }
 \description{
-Genes grouped by profiles determined by the result returned from \code{tukeyHSDTest} function.
+Genes grouped by profiles determined by the result
+returned from \code{tukeyHSDTest} function.
 }
 

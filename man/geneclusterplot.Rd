@@ -7,7 +7,8 @@
 geneclusterplot(printout, genecl, TopGOs)
 }
 \arguments{
-\item{printout}{A data frame with labels, genes' names and GO IDs returned by \code{print.GOcluster} function.}
+\item{printout}{A data frame with labels, genes' names
+and GO IDs returned by \code{print.GOcluster} function.}
 
 \item{genecl}{An object of class \code{genecluster}.}
 
@@ -20,10 +21,12 @@ An object of class \code{geneclusterplot}.
 Constructor function for the class \code{geneclusterplot}.
 }
 \examples{
-clustered <- clustering(exanova, clust.metric = 'manhattan', clust.method = 'average')
+clustered <- clustering(exanova,
+ clust.metric = 'manhattan', clust.method = 'average')
 genecl <- unbundleCluster(clustered)
 # find all and then top GO terms
-# geneUniverse is a universe of all genes of interest, i.e. all genes measured by microarray
+# geneUniverse is a universe of all genes of interest
+# i.e. all genes measured by microarray
 geneUniverse <- rownames(exrtcga[[1]])
 all.gos <- findAllGOs(geneUniverse, clustered)
 top.gos <- findTopGOs(all.gos, sig.level = 0.1, top = 4)

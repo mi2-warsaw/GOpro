@@ -7,14 +7,16 @@
 makeNames(part.tukey.res, sig.level, n)
 }
 \arguments{
-\item{part.tukey.res}{A vector of a list of a result returned by \code{TukeyHSDTest}.}
+\item{part.tukey.res}{A vector of a list of
+a result returned by \code{TukeyHSDTest}.}
 
 \item{sig.level}{A numeric significance level of a test.}
 
 \item{n}{A number of compared groups.}
 }
 \value{
-A character vector of a name denoting results of all pairwise Tukey comparisons.
+A character vector of a name denoting
+results of all pairwise Tukey comparisons.
 }
 \description{
 Create profiles names of Tukey test results.

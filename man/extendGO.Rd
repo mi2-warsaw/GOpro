@@ -10,7 +10,8 @@ extendGO(TopGOs)
 \item{TopGOs}{A list of vectors with significant GO IDs.}
 }
 \value{
-A data frame with an extended description (term, definition, and ontology) of gene ontology terms.
+A data frame with an extended description
+ (term, definition, and ontology) of gene ontology terms.
 }
 \description{
 Find the description of characteristic GO functions.
@@ -18,7 +19,8 @@ Find the description of characteristic GO functions.
 \examples{
 tukey.results <- groupByTukey(exanova, sig.level = 0.1)
 # find all and then top GO terms
-# geneUniverse is a universe of all genes of interest, i.e. all genes measured by microarray
+# geneUniverse is a universe of all genes
+# of interest, i.e. all genes measured by microarray
 geneUniverse <- rownames(exrtcga[[1]])
 all.gos <- findAllGOs(geneUniverse, tukey.results, min = 8, max = 400)
 top.gos <- findTopGOs(all.gos, sig.level = 0.1, top = 2)

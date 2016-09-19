@@ -11,11 +11,15 @@
 
 \item{...}{Additional arguments to be passed (not in use).}
 }
+\value{
+genecluster
+}
 \description{
 Print groups of clustered genes.
 }
 \examples{
-unbundleCluster(clustering(exanova, clust.metric = 'manhattan', clust.method = 'average'))
+unbundleCluster(clustering(exanova,
+ clust.metric = 'manhattan', clust.method = 'average'))
 
 }
 

@@ -4,9 +4,14 @@
 \name{exrtcga}
 \alias{exrtcga}
 \title{Expressions of human genes.}
-\format{A list of 3 data frames with 300 rows each and 173, 190, and 122 variables respectively. Each variable corresponds to one probe.}
+\format{A list of 3 data frames with 300 rows each and 173, 190, and 122
+ variables respectively.
+ Each variable corresponds to one probe.}
 \usage{
 exrtcga
+}
+\value{
+data
 }
 \description{
 A dataset containing gene expressions of 300 human genes

@@ -14,5 +14,6 @@
 #' @import GO.db
 #' @importFrom  Rcpp sourceCpp
 #' @importFrom graphics legend plot text
-#' @importFrom stats TukeyHSD aggregate aov as.dendrogram dist hclust na.omit p.adjust
+#' @importFrom stats TukeyHSD aggregate aov
+#'  as.dendrogram dist hclust na.omit p.adjust
 NULL

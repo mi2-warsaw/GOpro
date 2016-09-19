@@ -2,25 +2,33 @@
 % Please edit documentation in R/aovTopTest.R
 \name{aovTopTest}
 \alias{aovTopTest}
-\title{Find all significantly different genes based on their normalized expressions' values.}
+\title{Find all significantly different genes based on their
+ normalized expressions' values.}
 \usage{
 aovTopTest(expr, top, sig.level = 0.05, parallel = FALSE)
 }
 \arguments{
-\item{expr}{A list of data frames of gene expressions with genes in rows and samples in columns.
-rows named with genes' aliases. The order of samples and genes has to be the same for each data frame.}
+\item{expr}{A list of data frames of gene expressions
+with genes in rows and samples in columns.
+Rows must be named with genes' aliases.
+The order of samples and genes has to be the same for each data frame.}
 
 \item{top}{A maximum number of genes to be returned for each group.}
 
-\item{sig.level}{A numeric value, a significance level used in BH correction for multiple testing. The default value is 0.05.}
+\item{sig.level}{A numeric value, a significance level used in BH
+correction for multiple testing. The default value is 0.05.}
 
-\item{parallel}{A logical value indicating if a task should be run on more than one core. The default value is \code{FALSE}.}
+\item{parallel}{A logical value indicating if a task should
+be run on more than one core.
+The default value is \code{FALSE}.}
 }
 \value{
-A list of significantly different genes and values of their expressions.
+A list of significantly different genes and values
+ of their expressions.
 }
 \description{
-Find all significantly different genes based on their normalized expressions' values.
+Find all significantly different genes based on their
+ normalized expressions' values.
 }
 \examples{
 aovTopTest(exrtcga, top = 50, sig.level = 0.1, parallel = FALSE)

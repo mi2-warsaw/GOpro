@@ -2,18 +2,24 @@
 % Please edit documentation in R/groupByProfiles.R
 \name{IsConflict}
 \alias{IsConflict}
-\title{Check if there is a conflict between results of the Tukey test, ex. a=b, b=c, c!=a.}
+\title{Check if there is a conflict between results of the Tukey test,
+ex. a=b, b=c, c!=a.}
 \usage{
 IsConflict(part.tukey.res, sig.level, n)
 }
 \arguments{
-\item{part.tukey.res}{A vector of a list of a result returned by \code{TukeyHSDTest}.}
+\item{part.tukey.res}{A vector of a list of a result
+returned by \code{TukeyHSDTest}.}
 
 \item{sig.level}{A numeric significance level of a test.}
 
 \item{n}{A number of compared groups.}
 }
+\value{
+A logical value.
+}
 \description{
-Check if there is a conflict between results of the Tukey test, ex. a=b, b=c, c!=a.
+Check if there is a conflict between results of the Tukey test,
+ex. a=b, b=c, c!=a.
 }
 

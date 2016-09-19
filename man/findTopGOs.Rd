@@ -2,28 +2,36 @@
 % Please edit documentation in R/findTopGOs.R
 \name{findTopGOs}
 \alias{findTopGOs}
-\title{Find top gene ontology terms for groups of genes based on the result obtained from \code{findAllGOs}.}
+\title{Find top gene ontology terms for groups of genes
+ based on the result obtained from \code{findAllGOs}.}
 \usage{
 findTopGOs(AllGOs, sig.level, top)
 }
 \arguments{
-\item{AllGOs}{A list of lists of vectors each with a p-value obtained from Fisher test, GO id and all members of each group.}
+\item{AllGOs}{A list of lists of vectors each with a p-value
+obtained from Fisher test, GO id and all members of each group.}
 
-\item{sig.level}{A numeric value, a significance level used in BH correction for multiple testing.}
+\item{sig.level}{A numeric value, a significance
+level used in BH correction for multiple testing.}
 
-\item{top}{A number of the most characteristic functions of groups of genes to be returned.}
+\item{top}{A number of the most characteristic
+functions of groups of genes to be returned.}
 }
 \value{
-A list of lists of corrected p-values of Fisher test of characteristic for each group GO terms named with gene ontology terms identifiers.
+A list of lists of corrected p-values of Fisher test of
+ characteristic for each group GO terms named with
+ gene ontology terms identifiers.
 }
 \description{
-Find top gene ontology terms for groups of genes based on the result obtained from \code{findAllGOs}.
+Find top gene ontology terms for groups of genes
+ based on the result obtained from \code{findAllGOs}.
 }
 \examples{
 tukey.results <- groupByTukey(exanova, parallel = FALSE, 0.1)
-#geneUniverse is a universe of all genes of interest, i.e. all genes measured by microarray
+#geneUniverse is a universe of all genes of interest
 geneUniverse <- rownames(exrtcga[[1]])
-all.gos <- findAllGOs(geneUniverse, tukey.results, min = 5, max = 500)
+all.gos <- findAllGOs(geneUniverse, tukey.results,
+ min = 5, max = 500)
 findTopGOs(all.gos, sig.level = 0.05, top = 10)
 
 }

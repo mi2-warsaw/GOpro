@@ -4,9 +4,14 @@
 \name{exanova}
 \alias{exanova}
 \title{Expressions of differently expressed human genes.}
-\format{A list of 3 data frames with 50 rows each and 173, 190, and 122 variables respectively. Each variable corresponds to one probe.}
+\format{A list of 3 data frames with 50 rows each and 173, 190, and 122
+ variables respectively.
+ Each variable corresponds to one probe.}
 \usage{
 exanova
+}
+\value{
+data
 }
 \description{
 A dataset containing gene expressions of 50 human genes returned by function

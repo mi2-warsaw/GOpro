@@ -4,12 +4,15 @@
 #' @param ... Additional arguments to be passed (not in use).
 #'
 #' @examples
-#' unbundleCluster(clustering(exanova, clust.metric = 'manhattan', clust.method = 'average'))
+#' unbundleCluster(clustering(exanova,
+#'  clust.metric = 'manhattan', clust.method = 'average'))
+#'
+#' @return genecluster
 #'
 #' @export
 
 print.genecluster <- function (x, ...)
 {
-  y <- x$groups
-  y
+    y <- x$groups
+    y
 }

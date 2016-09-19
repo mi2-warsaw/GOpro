@@ -7,9 +7,11 @@
 GO(allGO, topGO)
 }
 \arguments{
-\item{allGO}{A list of lists of vectors each with a p-value obtained from Fisher test, GO id and all members of each group.}
+\item{allGO}{A list of lists of vectors each with a p-value
+obtained from Fisher test, GO id and all members of each group.}
 
-\item{topGO}{A list of lists with gene ontology terms identifiers characteristic for each group.}
+\item{topGO}{A list of lists with gene ontology terms
+identifiers characteristic for each group.}
 }
 \value{
 An object of class \code{GO}.
@@ -18,12 +20,14 @@ An object of class \code{GO}.
 Constructor function for the class \code{GO}.
 }
 \examples{
-clustered <- clustering(exanova, clust.metric = 'manhattan', clust.method = 'average')
+clustered <- clustering(exanova, clust.metric = 'manhattan',
+ clust.method = 'average')
 genecl <- unbundleCluster(clustered)
 # find all and then top GO terms
-# geneUniverse is a universe of all genes of interest, i.e. all genes measured by microarray
+# geneUniverse is a universe of all genes of interest
 geneUniverse <- rownames(exrtcga[[1]])
-all.gos <- findAllGOs(geneUniverse, clustered, min = 10, max = 200)
+all.gos <- findAllGOs(geneUniverse, clustered,
+ min = 10, max = 200)
 top.gos <- findTopGOs(all.gos, sig.level = 0.05, top = 2)
 # create an object of class \\code{GO}
 GO(all.gos, top.gos)

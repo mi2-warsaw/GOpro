@@ -1,5 +1,6 @@
 ---
-title: "GOpro: Determine groups of genes and find their most characteristic GO term"
+title: "GOpro: Determine groups of genes and find their most 
+    characteristic GO term"
 author: "Lidia Chrabaszcz"
 output: rmarkdown::html_vignette
 vignette: >
@@ -9,12 +10,33 @@ vignette: >
 ---
 
 ## Overview
-This document presents an overview of the GOpro package. This package is for determining groups of genes and finding characteristic functions for these groups. It allows forinterpreting groups of genes by their most characteristic biological function. It provides a tool for determining significantly different genes between at least two  distinct groups (i.e. patients with different medical condition) which is ANOVA test with correction for multiple testing. It also gives two methods for grouping these genes. One of them is statistical that is pairwise comparisons between groups of patients' with different medical condition  genes using Tukey's method. By this method profiles of genes are determined, i.e. in terms of expressions genes are grouped according to the differences in the expressions between given groups of patients with different medical condition. Another method of grouping is hierarchical clustering. 
-Next method provides finding the most characteristic GO terms (biological functions of genes) for anteriorly obtained groups using one-sided Fisher's test for overrepresentation. If genes are grouped by hierarchical clustering, then the most characteristic function is found for all groups (for each node in the dendrogram).
+This document presents an overview of the GOpro package. 
+This package is for determining groups of genes and finding characteristic 
+functions for these groups. It allows forinterpreting groups of genes by their 
+most characteristic biological function. It provides a tool for determining 
+significantly different genes between at least two  distinct groups 
+(i.e. patients with different medical condition) which is ANOVA test with 
+correction for multiple testing. It also gives two methods for grouping 
+these genes. One of them is statistical that is pairwise comparisons 
+between groups of patients' with different medical condition  genes 
+using Tukey's method. By this method profiles of genes are determined, 
+i.e. in terms of expressions genes are grouped according to the 
+differences in the expressions between given groups of patients with 
+different medical condition. Another method of grouping is hierarchical 
+clustering. Next method provides finding the most characteristic GO terms
+(biological functions of genes) for anteriorly obtained groups using 
+one-sided Fisher's test for overrepresentation. If genes are grouped by 
+hierarchical clustering, then the most characteristic function is 
+found for all groups (for each node in the dendrogram).
 
 ## Data
 
-Data used in this example come from [The Cancer Genome Atlas](https://tcga-data.nci.nih.gov/tcga/). They were downloaded via RTCGA.PANCAN12 package. The data represent expressions of 300 genes randomly chosen from 16115 genes determined for each patient (sample).  Three different medical conditions are included: acute myleoid leukemia, colon cancer, and bladder cancer.
+Data used in this example come from 
+[The Cancer Genome Atlas](https://tcga-data.nci.nih.gov/tcga/). 
+They were downloaded via RTCGA.PANCAN12 package. The data represent 
+expressions of 300 genes randomly chosen from 16115 genes determined 
+for each patient (sample).  Three different medical conditions are 
+included: acute myleoid leukemia, colon cancer, and bladder cancer.
 
 First, load the GOpro package.
 ```{r, echo=TRUE, results='hide', cache=TRUE}
@@ -31,9 +53,18 @@ expr[[1]][1:5, 1:5]
 ```
 
 ## Example 
-Genes aliases must be used as genes names and they must be arranged in the same order for each group. Genes must be stored in rows and probes (samples) in columns. Data frames of genes and patients observations must be arranged into a list. The length of the list should be consistent with the number of data frames (different groups of probes).
+Genes aliases must be used as genes names and they must be arranged
+in the same order for each group. Genes must be stored in rows and probes
+(samples) in columns. Data frames of genes and patients observations
+must be arranged into a list. The length of the list should be consistent 
+with the number of data frames (different groups of probes).
 
-Having in mind that data should be normally distributed, the analysis of variance test is conducted by function *aovTopTest*. The *top* parameter denotes the number of significantly different genes to be given by this function. In the case of ties, all genes for which the p-value of the test is the same as for the last *top* are included in the result. 
+Having in mind that data should be normally distributed, the analysis 
+of variance test is conducted by function *aovTopTest*. 
+The *top* parameter denotes the number of significantly different genes
+to be given by this function. In the case of ties, all genes for which 
+the p-value of the test is the same as for the last *top* are included 
+in the result. 
 ```{r, echo=FALSE, results='hide', cache=TRUE, message = FALSE}
 aov.results <- aovTopTest(expr, top = 20, sig.level = 0.1)
 ```
@@ -42,70 +73,112 @@ Significantly different genes are then grouped by pairwise comparisons.
 ```{r, results='markup', cache=TRUE, echo=TRUE}
 tukey.results <- groupByTukey(aov.results)
 ```
-The output is stored as a list where notation ``bladder$<$colon$<$gbm$<$leukemia'' denotes that the mean expression of bladder cancer probes is smaller than the mean expression of colon cancer probes, and they both are smaller than the mean expression of glioblastoma probes and so on for the leukemia group.
+The output is stored as a list where notation 
+``bladder$<$colon$<$gbm$<$leukemia'' 
+denotes that the mean expression of bladder cancer probes is smaller 
+than the mean expression of colon cancer probes, and they both 
+are smaller than the mean expression of glioblastoma probes and 
+so on for the leukemia group.
 The third element of the list is presented below.
 ```{r, results='markup', cache=TRUE, echo=TRUE}
 tukey.results[[3]] 
 ```
-The next step is to find all GO terms annotated with each of the gene groups. The *min* and *max* parameters denote the range of counts of genes annotated with each GO term. All GO terms with counts above or below this range are omitted from the analysis.
+The next step is to find all GO terms annotated with each of the 
+gene groups. The *min* and *max* parameters denote the range of 
+counts of genes annotated with each GO term. All GO terms with 
+counts above or below this range are omitted from the analysis.
 For groups obtained from all pairwise comparisons.
 ```{r, results='markup', cache=TRUE, echo=TRUE, message = FALSE}
-all.gos <- findAllGOs(tukey.results, geneUni = rownames(expr[[1]]), onto = c('MF', 'BP', 'CC'), min = 7, max = 400)
+all.gos <- findAllGOs(tukey.results, geneUni = rownames(expr[[1]]), 
+                      onto = c('MF', 'BP', 'CC'), min = 7, max = 400)
 ```
-A part of the result (first five lines of the second element of a returned list) is presented below. The first value in a row is a p-value of a Fisher's test not corrected for the number of comparisons within a group.
+A part of the result (first five lines of the second element 
+of a returned list) is presented below. The first value in a row 
+is a p-value of a Fisher's test not corrected for the number of 
+comparisons within a group.
 ```{r, results='markup', cache=TRUE, echo=TRUE, message = FALSE}
 all.gos[[2]][1:5]
 ```
-Then, find 2 the most characteristic biological functions (GO terms) from all annotated terms for each group. The signficance level for BH correction is set to 0.1.
+Then, find 2 the most characteristic biological functions (GO terms) 
+from all annotated terms for each group. The signficance level 
+for BH correction is set to 0.1.
 ```{r, results='markup', cache=TRUE, echo=TRUE, message = FALSE}
 tukey.top <- findTopGOs(all.gos, sig.level = 0.1, top = 2)
 ```
-A part of the result (first three elements of a returned list) is presented here. Each element of a list consists of p-values annotated with selected most characteristic GO terms for the particular group. These p-values are named with the GO ID and they are corrected for the number of comparisons within a group.
+A part of the result (first three elements of a returned list) is 
+presented here. Each element of a list consists of p-values annotated 
+with selected most characteristic GO terms for the particular group. 
+These p-values are named with the GO ID and they are corrected 
+for the number of comparisons within a group.
 ```{r, results='markup', cache=TRUE, echo=TRUE, message = FALSE}
 tukey.top[1:3]
 ```
-The results of the analysis can be presented in a more descriptive way or in a concise one.
-The concise way is obtained by using *GO* function (additionally information about p-values returned by *findTopGOs* are included). To get more descriptive results use *extendGO* function. First elements of the output are presented here.
+The results of the analysis can be presented in a more 
+descriptive way or in a concise one.
+The concise way is obtained by using *GO* function 
+(additionally information about p-values returned by *findTopGOs* 
+are included). To get more descriptive results use *extendGO* function. 
+First elements of the output are presented here.
 ```{r, results='markup', cache=TRUE, echo=TRUE, message = FALSE, tidy=TRUE}
 print(GO(all.gos, tukey.top))[1:2, ]
 #extendGO(tukey.top)[1:2, ]
 ```
 
 ### Hierarchical clustering
-Alternatively, significantly different genes may be grouped by hierarchical clustering.
+Alternatively, significantly different genes may be grouped 
+by hierarchical clustering.
 ```{r, results='markup', cache=TRUE, echo=TRUE, message = FALSE}
-cluster.results <- clustering(aov.results, clust.metric = "euclidean", clust.method = "centroid")
+cluster.results <- clustering(aov.results, clust.metric = "euclidean", 
+                              clust.method = "centroid")
 ```
 Then, find all GO terms annotated with each of the gene groups. 
 ```{r, results='markup', cache=TRUE, echo=TRUE, message = FALSE}
-all.gos <- findAllGOs(cluster.results, geneUni = rownames(expr[[1]]), onto = c('MF', 'BP', 'CC'), min = 7, max = 600)
+all.gos <- findAllGOs(cluster.results, geneUni = rownames(expr[[1]]), 
+                      onto = c('MF', 'BP', 'CC'), min = 7, max = 600)
 ```
-A part of the result (first five lines of the second element of a returned list) is presented below. The first value in a row is a p-value of a Fisher's test not corrected for the number of comparisons within a group.
+A part of the result (first five lines of the second element of 
+a returned list) is presented below. The first value in a row is 
+a p-value of a Fisher's test not corrected for the number of 
+comparisons within a group.
 ```{r, results='markup', cache=TRUE, echo=TRUE, message = FALSE}
 all.gos[[2]][1:5]
 ```
-Then, find 2 the most characteristic biological functions (GO terms) from all annotated terms for each group. The signficance level for BH correction is set to 0.1.
+Then, find 2 the most characteristic biological functions (GO terms) 
+from all annotated terms for each group. The signficance level 
+for BH correction is set to 0.1.
 ```{r, results='markup', cache=TRUE, echo=TRUE, message = FALSE}
 cluster.top <- findTopGOs(all.gos, sig.level = 0.1, top = 2)
 ```
-A part of the result (first three elements of a returned list) is presented here. Each element of a list consists of p-values annotated with selected most characteristic GO terms for the particular group. These p-values are named with the GO ID and they are corrected for the number of comparisons within a group.
+A part of the result (first three elements of a returned list) is presented 
+here. Each element of a list consists of p-values annotated with selected 
+most characteristic GO terms for the particular group. These p-values are 
+named with the GO ID and they are corrected for the number of comparisons 
+within a group.
 ```{r, results='markup', cache=TRUE, echo=TRUE, message = FALSE}
 cluster.top[1:3]
 ```
-The results of the analysis can be presented in a more descriptive way or in a concise one.
-The concise way is obtained by using *GO* function (additionally information about p-values returned by *findTopGOs* are included). To get more descriptive results use *extendGO* function.
+The results of the analysis can be presented in a more descriptive 
+way or in a concise one.
+The concise way is obtained by using *GO* function (additionally 
+information about p-values returned by *findTopGOs* are included). 
+To get more descriptive results use *extendGO* function.
 The first five rows of a result are presented below for each function.
 ```{r, results='markup', cache=TRUE, echo=TRUE, message = FALSE}
 print(GO(all.gos, cluster.top))[1:2, ]
 #extendGO(cluster.top)[1:2, ]
 ```
-In order to present the results graphically the following functions must be used.
+In order to present the results graphically the following 
+functions must be used.
 ```{r, results='markup', cache=TRUE, echo=TRUE, message = FALSE}
 unbundled <- unbundleCluster(cluster.results)
 printout <- GO(all.gos, cluster.top)
 dendro <- geneclusterplot(printout, unbundled, cluster.top)
 ```
-The result of the clustering can be presented in the dendrogram. The parameter *over.represented* indicates if the dominant GO terms should be calculated and presented in the plot. The dominant GO term is the most frequently represented ontology by all GO terms characteristic for each node of the dendrogram.
+The result of the clustering can be presented in the dendrogram. 
+The parameter *over.represented* indicates if the dominant GO terms 
+should be calculated and presented in the plot. The dominant GO term 
+is the most frequently represented ontology by all GO terms characteristic 
+for each node of the dendrogram.
 ```{r, echo=TRUE, fig.height=6, fig.width=6, message = FALSE, results='hide', cache = TRUE}
 plotg(dendro, over.represented = FALSE)
 ```

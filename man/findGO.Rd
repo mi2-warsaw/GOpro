@@ -11,42 +11,60 @@ findGO(groups, topAOV = 50, sig.levelAOV = 0.1, parallel = FALSE,
   extend = FALSE)
 }
 \arguments{
-\item{groups}{a list of data frames of gene expressions with genes in rows and samples in columns.
-rows named with genes' aliases. The order of samples and genes has to be the same for each data frame.}
+\item{groups}{a list of data frames of gene expressions
+with genes in rows and samples in columns.
+Rows must be named with genes' aliases.
+The order of samples and genes has to be the same for each data frame.}
 
-\item{topAOV}{A numeric value, a number of most significantly differentiated genes to be returned.}
+\item{topAOV}{A numeric value, a number of most
+significantly differentiated genes to be returned.}
 
-\item{sig.levelAOV}{a numeric value, a significance level used in BH correction for multiple testing (\code{aovTopTest}).}
+\item{sig.levelAOV}{a numeric value, a significance level
+used in BH correction for multiple testing (\code{aovTopTest}).}
 
-\item{parallel}{A logical value indicating if a task should be run on more than one core.}
+\item{parallel}{A logical value indicating if a task
+should be run on more than one core.}
 
 \item{grouped}{A method of grouping genes, one of 'tukey' and 'clustering'.}
 
-\item{sig.levelGO}{A numeric value, a significance level used in BH correction for multiple testing (\code{findTopGOs}).}
+\item{sig.levelGO}{A numeric value, a significance level used
+in BH correction for multiple testing (\code{findTopGOs}).}
 
-\item{minGO}{A minimum number of functions that a gene needs to represent to be considered as frequent.}
+\item{minGO}{A minimum number of functions that a gene
+needs to represent to be considered as frequent.}
 
-\item{maxGO}{A maximum number of functions that a gene needs to represent to be considered as frequent.}
+\item{maxGO}{A maximum number of functions that a gene
+needs to represent to be considered as frequent.}
 
-\item{clust.metric}{The method to calculate a distance measure used in hierarchical clustering, possible names: "euclidean",
+\item{clust.metric}{The method to calculate a distance measure
+used in hierarchical clustering, possible names: "euclidean",
 "maximum", "manhattan", "canberra", "binary" or "minkowski".}
 
-\item{clust.method}{The agglomeration method to used to cluster genes. This should be #'one of "ward.D",
-"ward.D2", "single", "complete", "average" (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).}
+\item{clust.method}{The agglomeration method to used to cluster genes.
+This should be #'one of "ward.D",
+"ward.D2", "single", "complete", "average" (= UPGMA),
+"mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).}
 
-\item{dist.matrix}{A matrix with calculated distances to be used as a metric by \code{hclust} function.}
+\item{dist.matrix}{A matrix with calculated distances to be
+used as a metric by \code{hclust} function.}
 
-\item{topGO}{A number of the most characteristic functions of groups of genes to be returned.}
+\item{topGO}{A number of the most characteristic functions
+of groups of genes to be returned.}
 
-\item{sig.levelTUK}{A numeric value, a significance level used in Tukey's all pairwise comparison (\code{groupByTukey}).}
+\item{sig.levelTUK}{A numeric value, a significance level used in
+Tukey's all pairwise comparison (\code{groupByTukey}).}
 
-\item{onto}{An ontology or ontologies to be searched for significant GO terms, at least one of 'MF' (molecular function),
+\item{onto}{An ontology or ontologies to be searched
+for significant GO terms,
+at least one of 'MF' (molecular function),
 'BP' (biological process), and 'CC' (cellular component).}
 
-\item{extend}{A logical value indicating if an extended version of the output should be presented.}
+\item{extend}{A logical value indicating if an extended
+version of the output should be presented.}
 }
 \value{
-A data frame with top gene ontology terms for each group of genes and with aliases of these genes.
+A data frame with top gene ontology terms for
+ each group of genes and with aliases of these genes.
 }
 \description{
 Find top Gene Ontology terms for given genes.
