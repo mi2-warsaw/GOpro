@@ -11,10 +11,12 @@ findGO(groups, topAOV = 50, sig.levelAOV = 0.05, parallel = FALSE,
   extend = FALSE)
 }
 \arguments{
-\item{groups}{a list of data frames of gene expressions
-with genes in rows and samples in columns.
-Rows must be named with genes' aliases.
-The order of samples and genes has to be the same for each data frame.}
+\item{groups}{a MultiAssayExperiment object
+containing an ExperimentList class object representing
+gene expressions for at least 3 cohorts.
+ Rows must be named with genes' aliases.
+ The order of samples and genes has to be the same for each
+ ExperimentList class object.}
 
 \item{topAOV}{A numeric value, a number of most
 significantly differentiated genes to be returned.}

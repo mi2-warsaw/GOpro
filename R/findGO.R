@@ -1,9 +1,11 @@
 #' Find top Gene Ontology terms for given genes.
 #'
-#' @param groups a list of data frames of gene expressions
-#'  with genes in rows and samples in columns.
+#' @param groups a MultiAssayExperiment object
+#' containing an ExperimentList class object representing
+#' gene expressions for at least 3 cohorts.
 #'  Rows must be named with genes' aliases.
-#'  The order of samples and genes has to be the same for each data frame.
+#'  The order of samples and genes has to be the same for each
+#'  ExperimentList class object.
 #' @param topAOV A numeric value, a number of most
 #'  significantly differentiated genes to be returned.
 #' @param sig.levelAOV a numeric value, a significance level
@@ -48,6 +50,7 @@
 #' @useDynLib GOpro, .registration=TRUE
 #'
 #' @importFrom Rcpp sourceCpp
+#' @importFrom MultiAssayExperiment assay experiments
 
 findGO <- function(groups, topAOV = 50, sig.levelAOV = 0.05,
                    parallel = FALSE, grouped = "tukey",
@@ -55,6 +58,7 @@ findGO <- function(groups, topAOV = 50, sig.levelAOV = 0.05,
                    clust.metric = NULL, clust.method = NULL,
                    dist.matrix = NULL, topGO = 3, sig.levelTUK = 0.05,
                    onto = c("MF", "BP", "CC"), extend = FALSE) {
+    groups <- assay(experiments(groups))
     aov.results <- aovTopTest(groups, topAOV, sig.levelAOV, parallel)
     geneUniverse <- rownames(groups[[1]])
     if (!(grouped == "tukey" | grouped == "clustering")) {

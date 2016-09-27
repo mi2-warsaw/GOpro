@@ -12,19 +12,6 @@
 
 "exrtcga"
 
-#' Expressions of differently expressed human genes.
-#'
-#' A dataset containing gene expressions of 50 human genes returned by function
-#' \code{aovTopTest(exrtcga, top = 50, sig.level = 0.1)}.
-#'
-#' @format A list of 3 data frames with 50 rows each and 173, 190, and 122
-#'  variables respectively.
-#'  Each variable corresponds to one probe.
-#'
-#' @return data
-
-"exanova"
-
 # rtcga <- prepareData(RTCGA = TRUE, cohorts = c('leukemia','colon','bladder'))
 # set.seed(5)
 # n <- sort(unique(ceiling(runif(306, 0, 8546))))

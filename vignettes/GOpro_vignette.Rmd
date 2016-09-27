@@ -6,7 +6,7 @@ output: BiocStyle::html_document
 vignette: >
   %\VignetteEncoding{UTF-8}
   %\VignetteIndexEntry{GOpro: Determine groups of genes and find their characteristic GO term}
-  %\VignetteEngine{knitr::knitr}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 ```{r style, echo = FALSE, results = 'asis'}
 BiocStyle::markdown()
@@ -58,7 +58,7 @@ expr <- exrtcga
 
 An example of the data:
 ```{r, echo=FALSE, results='markup'}
-expr[[1]][1:5, 1:5]
+#expr[[1]][1:5, 1:5]
 ```
 
 # Example 
