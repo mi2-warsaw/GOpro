@@ -1,5 +1,5 @@
 #' Create profiles names of Tukey test results.
-#'
+#' @noRd
 #' @param part.tukey.res A vector of a list of
 #' a result returned by \code{TukeyHSDTest}.
 #' @param sig.level A numeric significance level of a test.
@@ -139,7 +139,7 @@ makeNames <- function(part.tukey.res, sig.level, n) {
 
 #' Check if there is a conflict between results of the Tukey test,
 #' ex. a=b, b=c, c!=a.
-#'
+#' @noRd
 #' @param part.tukey.res A vector of a list of a result
 #' returned by \code{TukeyHSDTest}.
 #' @param sig.level A numeric significance level of a test.
@@ -203,7 +203,7 @@ IsConflict <- function(part.tukey.res, sig.level,
 
 #' Genes grouped by profiles determined by the result
 #' returned from \code{tukeyHSDTest} function.
-#'
+#' @noRd
 #' @param expr A list of data frames obtained from \code{aovTopTest}.
 #' @param tukey.results A data frame returned by \code{TukeyHSDTest}.
 #' @param sig.level A numeric value, a significance level used in

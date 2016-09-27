@@ -1,5 +1,5 @@
 #' Find all ontology terms annotated with genes.
-#'
+#' @noRd
 #' @param geneUni A vector of names of all genes that
 #'  were primarily included in the analysis,
 #'  i.e. all genes measured by the microarray.
@@ -25,7 +25,6 @@
 #' geneUniverse <- rownames(exrtcga[[1]])
 #' findAllGOs(geneUniverse, tukey.results)
 #'
-#' @export
 #'
 #' @import AnnotationDbi
 #' @import org.Hs.eg.db

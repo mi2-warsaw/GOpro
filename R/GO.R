@@ -1,5 +1,5 @@
 #' Constructor function for the class \code{GO}.
-#'
+#' @noRd
 #' @param allGO A list of lists of vectors each with a p-value
 #'  obtained from Fisher test, GO id and all members of each group.
 #' @param topGO A list of lists with gene ontology terms
@@ -19,8 +19,7 @@
 #' top.gos <- findTopGOs(all.gos, sig.level = 0.05, top = 2)
 #' # create an object of class \code{GO}
 #' GO(all.gos, top.gos)
-#'
-#' @export
+
 
 GO <- function(allGO, topGO) {
     out <- list(allGO = allGO, topGO = topGO)
@@ -30,7 +29,7 @@ GO <- function(allGO, topGO) {
 
 #' Print grouped genes with the information of
 #'  the labels and GO term's IDs.
-#'
+#' @noRd
 #' @param x An object of class \code{GO}.
 #' @param ... Additional arguments to be passed (not in use).
 #'
@@ -49,7 +48,6 @@ GO <- function(allGO, topGO) {
 #' # create an object of class \code{GO}
 #' printout <- GO(all.gos, top.gos)
 #'
-#' @export
 
 print.GO <- function(x, ...) {
     allGO <- x$allGO

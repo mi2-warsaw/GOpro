@@ -1,6 +1,6 @@
 #' Find all significantly different genes based on their
 #'  normalized expressions' values.
-#'
+#' @noRd
 #' @param expr A list of data frames of gene expressions
 #'  with genes in rows and samples in columns.
 #'  Rows must be named with genes' aliases.
@@ -18,7 +18,6 @@
 #' @examples
 #' aovTopTest(exrtcga, top = 50, sig.level = 0.1, parallel = FALSE)
 #'
-#' @export
 #'
 #' @import doParallel
 #' @import foreach
@@ -75,7 +74,7 @@ aovTopTest <- function(expr, top, sig.level = 0.05, parallel = FALSE) {
             foreach(z = seq_len(nrow(expr[[1]]))) %do%
                 aovCore(z, expr, group)
         }
-        }
+    }
 
     findGeneNames <- function(expr, parallel) {
         if (any(sapply(expr, function(x) is.null(rownames(x)))) ||
@@ -106,7 +105,7 @@ aovTopTest <- function(expr, top, sig.level = 0.05, parallel = FALSE) {
             names(anova.result) <- row.names(expr[[1]])
         }
         anova.result
-        }
+    }
 
     # sig.level and top parameters checking
     if (!is.numeric(sig.level) | (sig.level < 0)) {
@@ -151,8 +150,6 @@ aovTopTest <- function(expr, top, sig.level = 0.05, parallel = FALSE) {
     if (length(sorted) == 0) {
         message("Found no significantly different observations.")
     } else {
-        cat("adjusted p-values: \n",
-            sapply(sorted, function(x) paste(x, "\n")))
         lapply(expr, function(x) x[diff.expressed, ])
     }
 }

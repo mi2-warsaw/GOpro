@@ -1,5 +1,5 @@
 #' Determine group of genes by all pairwise comparisons (Tukey's method).
-#'
+#' @noRd
 #' @param expr A named list of data frames of significantly
 #'  different gene expressions
 #'  with genes in rows and samples in columns.
@@ -19,7 +19,6 @@
 #' @examples
 #' groupByTukey(exanova, sig.level = 0.1)
 #'
-#' @export
 
 groupByTukey <- function(expr, parallel = FALSE, sig.level = 0.05) {
     if (!all(sapply(expr, function(x)

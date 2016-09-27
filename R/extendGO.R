@@ -1,5 +1,5 @@
 #' Find the description of characteristic GO functions.
-#'
+#' @noRd
 #' @param TopGOs A list of vectors with significant GO IDs.
 #'
 #' @return A data frame with an extended description
@@ -15,7 +15,6 @@
 #' top.gos <- findTopGOs(all.gos, sig.level = 0.1, top = 2)
 #' extendGO(top.gos)
 #'
-#' @export
 #'
 #' @import GO.db
 
@@ -24,10 +23,10 @@ extendGO <- function(TopGOs) {
     nulls <- which(unlist(lapply(TopGOs, is.na)) == TRUE)
     TopG <- vector("character", sum(group.size))
     TopG[nulls] <- NA
-    TopG[-nulls] <- unlist(lapply(TopGOs, names))
+    TopG[-nulls] <- na.omit(unlist(lapply(TopGOs, names)))
     GO.descr <- lapply(TopG, function(GOID) {
         if (!is.na(GOID)) {
-            AnnotationDbi::select(GO.db, keys = GOID,
+                                select(GO.db, keys = GOID,
                                   columns = c("TERM", "DEFINITION",
                                               "ONTOLOGY"),
                                   keytype = "GOID")

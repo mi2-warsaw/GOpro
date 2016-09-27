@@ -1,5 +1,5 @@
 #' Print groups of clustered genes.
-#'
+#' @noRd
 #' @param x An object of class \code{genecluster}.
 #' @param ... Additional arguments to be passed (not in use).
 #'
@@ -9,7 +9,6 @@
 #'
 #' @return genecluster
 #'
-#' @export
 
 print.genecluster <- function (x, ...)
 {

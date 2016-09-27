@@ -37,20 +37,21 @@
 #' @param extend A logical value indicating if an extended
 #'  version of the output should be presented.
 #'
-#' @return A data frame with top gene ontology terms for
-#'  each group of genes and with aliases of these genes.
+#' @return A data frame containing the top gene ontology terms for
+#'  each group of genes and the gene aliases.
 #'
 #' @examples
 #' findGO(exrtcga, grouped = 'clustering', topGO = 10, onto = 'MF')
+#' findGO(exrtcga, grouped = 'tukey', topGO = 2, extend = TRUE)
 #' @export
 #'
 #' @useDynLib GOpro, .registration=TRUE
 #'
 #' @importFrom Rcpp sourceCpp
 
-findGO <- function(groups, topAOV = 50, sig.levelAOV = 0.1,
+findGO <- function(groups, topAOV = 50, sig.levelAOV = 0.05,
                    parallel = FALSE, grouped = "tukey",
-                   sig.levelGO = 0.1, minGO = 5, maxGO = 500,
+                   sig.levelGO = 0.05, minGO = 5, maxGO = 500,
                    clust.metric = NULL, clust.method = NULL,
                    dist.matrix = NULL, topGO = 3, sig.levelTUK = 0.05,
                    onto = c("MF", "BP", "CC"), extend = FALSE) {
@@ -67,7 +68,7 @@ findGO <- function(groups, topAOV = 50, sig.levelAOV = 0.1,
         if (extend == TRUE) {
             out <- extendGO(TopGOs)
         } else {
-            out <- GO(AllGOs, TopGOs)
+            out <- print(GO(AllGOs, TopGOs))
         }
     }
     if (grouped == "clustering") {
@@ -83,7 +84,7 @@ findGO <- function(groups, topAOV = 50, sig.levelAOV = 0.1,
         if (extend == TRUE) {
             out <- extendGO(top.gos)
         } else {
-            out <- GO(all.gos, top.gos)
+            out <- print(GO(all.gos, top.gos))
         }
     }
     out

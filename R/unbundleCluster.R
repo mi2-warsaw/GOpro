@@ -1,6 +1,6 @@
 #' Find all groups - rearrange the dendrogram:
 #'  find which elements were merged in each step.
-#'
+#' @noRd
 #' @param hc An object of class hclust.
 #'
 #' @return An object of class \code{genecluster},
@@ -10,8 +10,7 @@
 #' clusteredGenes <- clustering(exanova,
 #'  clust.metric = 'manhattan', clust.method = 'average')
 #' unbundleCluster(clusteredGenes)
-#'
-#' @export
+
 
 unbundleCluster <- function(hc) {
     roots <- hc$labels[hc$order]

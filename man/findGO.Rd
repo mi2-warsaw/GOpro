@@ -4,8 +4,8 @@
 \alias{findGO}
 \title{Find top Gene Ontology terms for given genes.}
 \usage{
-findGO(groups, topAOV = 50, sig.levelAOV = 0.1, parallel = FALSE,
-  grouped = "tukey", sig.levelGO = 0.1, minGO = 5, maxGO = 500,
+findGO(groups, topAOV = 50, sig.levelAOV = 0.05, parallel = FALSE,
+  grouped = "tukey", sig.levelGO = 0.05, minGO = 5, maxGO = 500,
   clust.metric = NULL, clust.method = NULL, dist.matrix = NULL,
   topGO = 3, sig.levelTUK = 0.05, onto = c("MF", "BP", "CC"),
   extend = FALSE)
@@ -63,13 +63,14 @@ at least one of 'MF' (molecular function),
 version of the output should be presented.}
 }
 \value{
-A data frame with top gene ontology terms for
- each group of genes and with aliases of these genes.
+A data frame containing the top gene ontology terms for
+ each group of genes and the gene aliases.
 }
 \description{
 Find top Gene Ontology terms for given genes.
 }
 \examples{
 findGO(exrtcga, grouped = 'clustering', topGO = 10, onto = 'MF')
+findGO(exrtcga, grouped = 'tukey', topGO = 2, extend = TRUE)
 }
 

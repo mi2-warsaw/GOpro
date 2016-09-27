@@ -1,6 +1,6 @@
 #' Core function for calculating p-values across all groups of genes
 #' using Tukey's Honest Distance test.
-#'
+#' @noRd
 #' @param expr A list of data frames of gene expressions
 #'  with genes in rows and samples in columns.
 #'  the names of rows represent genes' aliases.
@@ -40,7 +40,7 @@ TukeyCore <- function(z, expr, group) {
 #' Call the calculation of p-values across all groups of genes
 #' using Tukey's Honest Distance test optionally on more than
 #' one core (actually \code{#(available cores) - 1}).
-#'
+#' @noRd
 #' @param expr A list of data frames of gene expressions with
 #'  genes in rows and samples in columns.
 #'  The names of rows represent genes' aliases.

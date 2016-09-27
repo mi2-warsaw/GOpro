@@ -1,5 +1,5 @@
 #' Constructor function for the class \code{geneclusterplot}.
-#'
+#' @noRd
 #' @param printout A data frame with labels, genes' names
 #'  and GO IDs returned by \code{print.GOcluster} function.
 #' @param genecl An object of class \code{genecluster}.
@@ -21,7 +21,6 @@
 #'
 #' @return An object of class \code{geneclusterplot}.
 #'
-#' @export
 
 geneclusterplot <- function(printout, genecl, TopGOs) {
     out <- list(printout = printout, genecl = genecl$hclust, TopGOs = TopGOs)
@@ -30,7 +29,7 @@ geneclusterplot <- function(printout, genecl, TopGOs) {
 }
 
 #' Plot gene dendrogram with labels.
-#'
+#' @noRd
 #' @param x an object of class \code{geneclusterplot}.
 #' @param over.represented a logical value, if \code{TRUE} then
 #'  over represented GO categories are coded with colors for each branch.
@@ -51,7 +50,6 @@ geneclusterplot <- function(printout, genecl, TopGOs) {
 #' plotg(geneclusterplot(printout, genecl, top.gos),
 #'  over.represented = TRUE)
 #'
-#' @export
 #'
 #' @import dendextend
 
@@ -60,7 +58,7 @@ plotg <- function(x, over.represented) {
     hc <- x$genecl
     TopGOs <- x$TopGOs
     dendro <- as.dendrogram(hc)
-    nodes <- dendextend::get_nodes_xy(dendro)
+    nodes <- get_nodes_xy(dendro)
     roots <- which(nodes[, 2] == 0)
     new.order <- printout[, 1]
     new.order[roots] <- printout[1:length(roots),
@@ -113,7 +111,7 @@ plotg <- function(x, over.represented) {
         funColors[which(as.character(new.order) %in%
                             bpccmf)] <- "goldenrod1"
 
-        dendro <- dendextend::assign_values_to_branches_edgePar(dend = dendro,
+        dendro <- assign_values_to_branches_edgePar(dend = dendro,
                                                                 value = funColors, edgePar = "col")
         dendro %>% set("nodes_pch", 19) %>% set("nodes_col", "cadetblue") %>%
             set("leaves_pch", 19) %>% set("leaves_col", "coral2") %>%
@@ -132,7 +130,7 @@ plotg <- function(x, over.represented) {
                col = c(4, 3, 2, "cyan4", 6, "orchid4",
                        "goldenrod1", 1))
     } else {
-        dendro <- dendextend::assign_values_to_branches_edgePar(dend = dendro,
+        dendro <- assign_values_to_branches_edgePar(dend = dendro,
                                                                 value = 1,
                                                                 edgePar = "col")
         dendro %>% set("nodes_pch", 19) %>% set("nodes_col", "cadetblue") %>%

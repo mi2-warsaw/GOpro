@@ -1,6 +1,6 @@
 #' Find top gene ontology terms for groups of genes
 #'  based on the result obtained from \code{findAllGOs}.
-#'
+#' @noRd
 #' @param AllGOs A list of lists of vectors each with a p-value
 #'  obtained from Fisher test, GO id and all members of each group.
 #' @param sig.level A numeric value, a significance
@@ -20,7 +20,6 @@
 #'  min = 5, max = 500)
 #' findTopGOs(all.gos, sig.level = 0.05, top = 10)
 #'
-#' @export
 
 findTopGOs <- function(AllGOs, sig.level, top) {
     lapply(AllGOs, function(group.no) {

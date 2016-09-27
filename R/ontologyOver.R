@@ -1,5 +1,5 @@
 #' Calculate frequencies of each ontology in each group (CC, BP, MF).
-#'
+#' @noRd
 #' @param extendedGO A data frame with a one column of group
 #'  and another column with GO term (returned by \code{extendGO}).
 #'
@@ -17,7 +17,6 @@
 #' extended <- extendGO(top.gos)
 #' ontologyOver(extended)
 #'
-#' @export
 
 ontologyOver <- function(extendedGO) {
     group <- extendedGO$GROUP

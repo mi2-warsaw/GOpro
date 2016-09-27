@@ -1,6 +1,6 @@
 #' Cluster all interesting (differentially expressed)
 #'  genes using hierarchical clustering (based on all groups together).
-#'
+#' @noRd
 #' @param resultAOV A list of data frames of gene expressions
 #'  (genes in rows, samples in columns).
 #' @param clust.metric The method to calculate a distance measure
@@ -22,8 +22,6 @@
 #'
 #' @examples
 #' clustering(exanova, clust.metric = 'manhattan', clust.method = 'average')
-#'
-#' @export
 
 clustering <- function(resultAOV, clust.metric = NULL,
                        clust.method = NULL, dist.matrix = NULL) {
