@@ -17,6 +17,8 @@
 #'
 #'
 #' @import GO.db
+#' @importFrom S4Vectors DataFrame
+#' @importFrom IRanges IntegerList CharacterList
 
 extendGO <- function(TopGOs) {
     group.size <- sapply(TopGOs, length)
@@ -42,4 +44,13 @@ extendGO <- function(TopGOs) {
     names(assignedFunctions) <- c("GROUP", "GO ID",
                                   "TERM", "DEFINITION", "ONTOLOGY")
     assignedFunctions
+}
+
+extendoutput <- function(top.gos){
+    ext <- extendGO(top.gos)
+    DataFrame(GROUP = IntegerList(ext[, 1]),
+                  GOID = CharacterList(ext[, 2]),
+                  TERM = CharacterList(ext[, 3]),
+                  DEFINITION = CharacterList(ext[, 4]),
+                  ONTOLOGY = CharacterList(ext[, 5]))
 }

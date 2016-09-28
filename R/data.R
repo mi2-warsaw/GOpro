@@ -4,9 +4,12 @@
 #' randomly chosen from a list returned by function
 #' \code{prepareData(RTCGA = TRUE, cohorts = c('leukemia', 'colon', 'bladder'))}.
 #'
-#' @format A list of 3 data frames with 300 rows each and 173, 190, and 122
-#'  variables respectively.
-#'  Each variable corresponds to one probe.
+#' @format A MultiAssayExperiment object of 3 listed
+#' experiments with user-defined names and respective classes.
+#' Containing an ExperimentList class object of length 3:
+#' [1] leukemia: matrix with 300 rows and 173 columns
+#' [2] colon: matrix with 300 rows and 190 columns
+#' [3] bladder: matrix with 300 rows and 122 columns.
 #'
 #' @return data
 

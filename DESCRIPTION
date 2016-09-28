@@ -2,7 +2,7 @@ Package: GOpro
 Type: Package
 Title: Find the most characteristic gene
     ontology terms for groups of human genes
-Version: 0.99.0
+Version: 0.99.1
 Date: 2016-08-31
 Author: Lidia Chrabaszcz
 Maintainer: Lidia Chrabaszcz <chrabaszcz.lidia@gmail.com>
@@ -24,7 +24,10 @@ Imports:
     GO.db,
     Rcpp,
     stats,
-    graphics
+    graphics,
+    MultiAssayExperiment,
+    IRanges,
+    S4Vectors
 LinkingTo: Rcpp, BH
 RoxygenNote: 5.0.1
 Suggests: knitr,

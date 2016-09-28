@@ -19,11 +19,12 @@
 #' top.gos <- findTopGOs(all.gos, sig.level = 0.05, top = 2)
 #' # create an object of class \code{GO}
 #' GO(all.gos, top.gos)
+#' @importFrom IRanges CharacterList IntegerList
+#' @importFrom S4Vectors DataFrame List
 
 
 GO <- function(allGO, topGO) {
-    out <- list(allGO = allGO, topGO = topGO)
-    class(out) <- "GO"
+    out <- DataFrame(allGO = List(lapply(allGO, CharacterList)), topGO = NumericList(topGO))
     invisible(out)
 }
 
@@ -49,9 +50,9 @@ GO <- function(allGO, topGO) {
 #' printout <- GO(all.gos, top.gos)
 #'
 
-print.GO <- function(x, ...) {
-    allGO <- x$allGO
-    topGO <- x$topGO
+printGO <- function(x, ...) {
+    allGO <- x[[1]]
+    topGO <- x[[2]]
     y <- cbind(profile = names(topGO), GOs = lapply(topGO, names),
                p.values = lapply(topGO, function(x) round(x, 3)),
                GENES = sapply(allGO,
@@ -64,4 +65,16 @@ print.GO <- function(x, ...) {
                                   }
                               }))
     y
+}
+
+#' Create output.
+#' @noRd
+#' @param GO An object returned by \code{GO} function.
+#'
+#' @return An S4 object.
+#'
+
+output <- function(GO){
+    printedGO <- printGO(GO)
+    DataFrame(printedGO)
 }

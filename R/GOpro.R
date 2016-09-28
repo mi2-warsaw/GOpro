@@ -35,5 +35,7 @@
 #' @importFrom graphics legend plot text
 #' @importFrom stats TukeyHSD aggregate aov
 #'  as.dendrogram dist hclust na.omit p.adjust
+#' @importFrom S4Vectors DataFrame
+#' @importFrom IRanges CharacterList NumericList
 #' @seealso {\link{findGO}}
 NULL

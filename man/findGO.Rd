@@ -8,7 +8,7 @@ findGO(groups, topAOV = 50, sig.levelAOV = 0.05, parallel = FALSE,
   grouped = "tukey", sig.levelGO = 0.05, minGO = 5, maxGO = 500,
   clust.metric = NULL, clust.method = NULL, dist.matrix = NULL,
   topGO = 3, sig.levelTUK = 0.05, onto = c("MF", "BP", "CC"),
-  extend = FALSE)
+  extend = FALSE, over.rep = FALSE)
 }
 \arguments{
 \item{groups}{a MultiAssayExperiment object
@@ -42,7 +42,7 @@ needs to represent to be considered as frequent.}
 used in hierarchical clustering, possible names: "euclidean",
 "maximum", "manhattan", "canberra", "binary" or "minkowski".}
 
-\item{clust.method}{The agglomeration method to used to cluster genes.
+\item{clust.method}{The agglomeration method used to cluster genes.
 This should be #'one of "ward.D",
 "ward.D2", "single", "complete", "average" (= UPGMA),
 "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).}
@@ -63,6 +63,9 @@ at least one of 'MF' (molecular function),
 
 \item{extend}{A logical value indicating if an extended
 version of the output should be presented.}
+
+\item{over.rep}{A logical value indicating if an over
+represented GO terms should be presented in the plot.}
 }
 \value{
 A data frame containing the top gene ontology terms for

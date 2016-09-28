@@ -21,7 +21,7 @@
 #' @param clust.metric The method to calculate a distance measure
 #'  used in hierarchical clustering, possible names: "euclidean",
 #'  "maximum", "manhattan", "canberra", "binary" or "minkowski".
-#' @param clust.method The agglomeration method to used to cluster genes.
+#' @param clust.method The agglomeration method used to cluster genes.
 #'  This should be #'one of "ward.D",
 #'  "ward.D2", "single", "complete", "average" (= UPGMA),
 #'  "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).
@@ -38,6 +38,8 @@
 #'  'BP' (biological process), and 'CC' (cellular component).
 #' @param extend A logical value indicating if an extended
 #'  version of the output should be presented.
+#' @param over.rep A logical value indicating if an over
+#'  represented GO terms should be presented in the plot.
 #'
 #' @return A data frame containing the top gene ontology terms for
 #'  each group of genes and the gene aliases.
@@ -57,7 +59,7 @@ findGO <- function(groups, topAOV = 50, sig.levelAOV = 0.05,
                    sig.levelGO = 0.05, minGO = 5, maxGO = 500,
                    clust.metric = NULL, clust.method = NULL,
                    dist.matrix = NULL, topGO = 3, sig.levelTUK = 0.05,
-                   onto = c("MF", "BP", "CC"), extend = FALSE) {
+                   onto = c("MF", "BP", "CC"), extend = FALSE, over.rep = FALSE) {
     groups <- assay(experiments(groups))
     aov.results <- aovTopTest(groups, topAOV, sig.levelAOV, parallel)
     geneUniverse <- rownames(groups[[1]])
@@ -70,9 +72,9 @@ findGO <- function(groups, topAOV = 50, sig.levelAOV = 0.05,
                              onto, minGO, maxGO, parallel)
         TopGOs <- findTopGOs(AllGOs, sig.levelGO, topGO)
         if (extend == TRUE) {
-            out <- extendGO(TopGOs)
+            out <- extendoutput(TopGOs)
         } else {
-            out <- print(GO(AllGOs, TopGOs))
+            out <- output(GO(AllGOs, TopGOs))
         }
     }
     if (grouped == "clustering") {
@@ -82,13 +84,13 @@ findGO <- function(groups, topAOV = 50, sig.levelAOV = 0.05,
                               geneUni = rownames(groups[[1]]))
         top.gos <- findTopGOs(all.gos, sig.levelGO, topGO)
         unbundled <- unbundleCluster(cluster.results)
-        printout <- GO(all.gos, top.gos)
-        plotg(geneclusterplot(printout, unbundled, top.gos),
-              over.represented = FALSE)
+        printout <- printGO(GO(all.gos, top.gos))
+        plotg(printout, unbundled, top.gos,
+              over.represented = over.rep)
         if (extend == TRUE) {
-            out <- extendGO(top.gos)
+            out <- extendoutput(top.gos)
         } else {
-            out <- print(GO(all.gos, top.gos))
+            out <- output(GO(all.gos, top.gos))
         }
     }
     out

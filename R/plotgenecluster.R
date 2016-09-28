@@ -1,33 +1,3 @@
-#' Constructor function for the class \code{geneclusterplot}.
-#' @noRd
-#' @param printout A data frame with labels, genes' names
-#'  and GO IDs returned by \code{print.GOcluster} function.
-#' @param genecl An object of class \code{genecluster}.
-#' @param TopGOs A list of vectors with significant GO IDs.
-#'
-#' @examples
-#' clustered <- clustering(exanova,
-#'  clust.metric = 'manhattan', clust.method = 'average')
-#' genecl <- unbundleCluster(clustered)
-#' # find all and then top GO terms
-#' # geneUniverse is a universe of all genes of interest
-#' # i.e. all genes measured by microarray
-#' geneUniverse <- rownames(exrtcga[[1]])
-#' all.gos <- findAllGOs(geneUniverse, clustered)
-#' top.gos <- findTopGOs(all.gos, sig.level = 0.1, top = 4)
-#' # create an object of class \code{GO}
-#' printout <- GO(all.gos, top.gos)
-#' geneclusterplot(printout, genecl, top.gos)
-#'
-#' @return An object of class \code{geneclusterplot}.
-#'
-
-geneclusterplot <- function(printout, genecl, TopGOs) {
-    out <- list(printout = printout, genecl = genecl$hclust, TopGOs = TopGOs)
-    class(out) <- "geneclusterplot"
-    out
-}
-
 #' Plot gene dendrogram with labels.
 #' @noRd
 #' @param x an object of class \code{geneclusterplot}.
@@ -53,10 +23,8 @@ geneclusterplot <- function(printout, genecl, TopGOs) {
 #'
 #' @import dendextend
 
-plotg <- function(x, over.represented) {
-    printout <- print(x$printout)
-    hc <- x$genecl
-    TopGOs <- x$TopGOs
+plotg <- function(printout, genecl, TopGOs, over.represented) {
+    hc <- genecl$hclust
     dendro <- as.dendrogram(hc)
     nodes <- get_nodes_xy(dendro)
     roots <- which(nodes[, 2] == 0)

@@ -17,8 +17,9 @@ BiocStyle::markdown()
 source("http://www.bioconductor.org/biocLite.R")
 biocLite("GOpro", dependencies = TRUE)
 ```
-After the package is installed, it can be loaded into R workspace typing
+
 # Loading
+After the package is installed, it can be loaded into R workspace typing
 ```{r, eval=TRUE, results='hide', warning=FALSE, message=FALSE}
 library(GOpro)
 ```
@@ -27,56 +28,123 @@ library(GOpro)
 This document presents an overview of the GOpro package. 
 This package is for determining groups of genes and finding characteristic 
 functions for these groups. It allows for interpreting groups of genes by their 
-most characteristic biological function. It provides a tool for determining 
+most characteristic biological function. It provides one function *findGO*
+which is based on the set of methods. One of these methods allows for determining 
 significantly different genes between at least two  distinct groups 
-(i.e. patients with different medical condition) which is ANOVA test with 
-correction for multiple testing. It also gives two methods for grouping 
-these genes. One of them is statistical that is pairwise comparisons 
-between groups of patients' with different medical condition  genes 
-using Tukey's method. By this method profiles of genes are determined, 
-i.e. in terms of expressions genes are grouped according to the 
-differences in the expressions between given groups of patients with 
-different medical condition. Another method of grouping is hierarchical 
-clustering. Next method provides finding the most characteristic GO terms
-(biological functions of genes) for anteriorly obtained groups using 
-one-sided Fisher's test for overrepresentation. If genes are grouped by 
-hierarchical clustering, then the most characteristic function is 
-found for all groups (for each node in the dendrogram).
+(i.e. patients with different medical condition) - the ANOVA test with 
+correction for multiple testing. It also provides two methods for grouping 
+genes. One of them is so-called all pairwise comparisons 
+utilizing Tukey's method. By this method profiles of genes are determined, 
+i.e. in terms of the gene expression genes are grouped according to the 
+differences in the expressions between given cohorts. 
+Another method of grouping is hierarchical 
+clustering. This package provides a method for finding the most characteristic 
+gene ontology terms for anteriorly obtained groups using the 
+one-sided Fisher's test for overrepresentation of the gene ontology term.
+If genes were grouped by the hierarchical clustering, then the most characteristic 
+function is 
+found for all possible groups (for each node in the dendrogram).
+
+
+# Details 
+Genes must be named with the gene aliases and they must be
+arranged in the same order for each cohort.
+
+## Determining significantly different genes based on their expressions
+Genes which are statistically differently expressed are selected for the
+further analysis by ANOVA test. 
+The *topAOV* parameter denotes the maximum number of significantly 
+different genes
+to be selected. The significance level of ANOVA test is specified 
+by the *sig.levelAOV* parameter.  
+This threshold is used as the significance level in the BH correction 
+for multiple testing.
+In the case of equal p-values of the test (below the given threshold), 
+all genes for which the p-value of the test is the same as for the gene
+numbered with the *topAOV* value are included in the result. 
+
+## Grouping genes based on their similarity
+There are two methods provided for grouping genes. They are
+specified by the *grouped* parameter. The first one using
+Tukey's test is called when *grouped* equals *'tukey'* and the
+second one can be called by using the *'clustering'* value.
+
+### All pairwise comparisons by Tukey's test
+The Tukey's test is applied to group genes based on their profiles.
+The *sig.levelTUK* parameter denotes the significance level of Tukey's test.
+For each gene two-sided Tukey's test is conducted among cohorts.
+The mean expressions in the cohorts are arranged in 
+ascending order and the result of the test is adapted. All genes with
+the same order of means and the same result of the test are grouped together.
+I.e. notation *colon\=bladder\<leukemia* denotes that the mean expression 
+calculated for a 
+particular gene in the colon cancer cohort is statistically the same as for the
+bladder cancer cohort. Both mean values determined for aforementioned cohorts are
+statistically lower than the mean expression measured for the leukemia cohort.
+
+### Hierarchical clustering
+Hierarchical clustering is utilized for grouping genes based on dissimilarity
+measures. In this case all clusters are subjected to the further analysis.
+The *clust.metric* parameter is a method to calculate a distance measure
+between genes, the *clust.method* is the agglomeration method used to cluster genes,
+and the *dist.matrix* is an optional parameter for distance matrix if available
+*clust.metric*
+methods are not sufficient for the user.
+
+## Finding characteristic gene ontology terms
+For each specified group the *org.Hs.eg.db* is searched for all relevant
+GO terms. The number of counts of each GO term is calculated for each group.
+Then the Fisher's test is applied in order to find the most characteristic GO terms
+for each group of genes.
+The *minGO* and *maxGO* parameters denote the range of 
+counts of genes annotated with each GO term. All GO terms with 
+counts above or below this range are omitted in the analysis. It enables for the
+exclusion of very rare or very common gene ontology terms. 
+Gene ontology domains to be searched for GO terms can be specified by the *onto*
+parameter. Possible domains are: *'MF'* (molecular function),
+*'BP'* (biological process), and *'CC'* (cellular component).
+The *sig.levelGO* parameter specifies the significance level of the Fisher's test
+(correction for multiple testing is included).
 
 # Data
 
-Data used in this example come from 
+Data used in this example comes from 
 [The Cancer Genome Atlas](https://tcga-data.nci.nih.gov/tcga/). 
-They were downloaded via RTCGA.PANCAN12 package. The data represent 
+They were downloaded via RTCGA.PANCAN12 package. The data represents 
 expressions of 300 genes randomly chosen from 16115 genes determined 
-for each patient (sample).  Three cohortss are 
+for each patient (sample). Three cohorts are 
 included: acute myleoid leukemia, colon cancer, and bladder cancer.
+The data is stored in this *GOpro* package as a MultiAssayExperiment
+object.
 
-```{r, cache=TRUE, results='hide', message=FALSE}
-expr <- exrtcga
+An example of the data structure:
+```{r, cache=TRUE, message=FALSE, results='markup'}
+exrtcga
 ```
 
-An example of the data:
-```{r, echo=FALSE, results='markup'}
-#expr[[1]][1:5, 1:5]
+# Example
+To run the analysis with default parameters on the exrtcga object call:
+```{r, results='hold', message=FALSE, cache=TRUE}
+findGO(exrtcga)
 ```
 
-# Example 
-Genes aliases must be used as genes names and they must be arranged
-in the same order for each group. Genes must be stored in rows and probes
-(samples) in columns. Data frames of genes and patients observations
-must be arranged into a list. The length of the list should be consistent 
-with the number of data frames (different groups of probes).
+The results of the analysis can be presented in a more descriptive 
+way or in a concise one. To get more descriptive results use *extend=TRUE*
+option.
+Additionally, the *TERM*, *DEFINITION*, and *ONTOLOGY* for each ontology
+term are returned.
+```{r, results='hold', message=FALSE, cache=TRUE}
+findGO(exrtcga, extend = TRUE)
+```
 
-Having in mind that data should be normally distributed, the analysis 
-of variance test is conducted by function *aovTopTest*. 
-The *top* parameter denotes the number of significantly different genes
-to be given by this function. In the case of ties, all genes for which 
-the p-value of the test is the same as for the last *top* are included 
-in the result. 
-```{r, echo=TRUE, results='markup'}
-findGO(expr)
-findGO(expr, extend = TRUE)
-findGO(expr, grouped = 'clustering')
-findGO(expr, grouped = 'clustering', extend = TRUE)
+In order to find top 3 GO terms for genes grouped by hierarchical clustering 
+run the following call. The result of clustering is
+presented on the plot.
+```{r, results='hold', message=FALSE, cache=TRUE}
+findGO(exrtcga, topGO = 2, grouped = 'clustering')
+```
+The plot can be also enriched with information about the most frequent
+ontology domain for each node on the dendrogram.
+```{r, results='hold', message=FALSE, cache=TRUE}
+findGO(exrtcga, topGO = 2, grouped = 'clustering', over.rep = TRUE)
 ```
