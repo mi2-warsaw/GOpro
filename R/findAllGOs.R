@@ -49,8 +49,8 @@ findAllGOs <- function(geneUni, geneSel, onto = c("MF", "BP", "CC"),
         cgroups <- unbundleCluster(geneSel)[[1]]
     }
     iter <- length(cgroups)
-    all.annot <- AnnotationDbi::select(org.Hs.eg.db, keys = geneUni,
-                                       keytype = "SYMBOL", columns = "GO")
+    all.annot <- select(org.Hs.eg.db, keys = geneUni,
+                        keytype = "SYMBOL", columns = "GO")
     all.annot <- all.annot[all.annot$ONTOLOGY %in% onto, ]
 
     if (nrow(all.annot) == 0)
