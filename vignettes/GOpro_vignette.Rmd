@@ -140,11 +140,11 @@ findGO(exrtcga, extend = TRUE)
 In order to find top 2 GO terms for genes grouped by hierarchical clustering 
 run the following call. The result of clustering is
 presented on the plot.
-```{r, results='hold', message=FALSE, cache=TRUE}
+```{r, results='markup', message=FALSE, cache=TRUE, fig.keep='all', fig.show='hold', dev='png'}
 findGO(exrtcga, topGO = 2, grouped = 'clustering')
 ```
 The plot can be also enriched with information about the most frequent
 ontology domain for each node on the dendrogram.
-```{r, results='hold', message=FALSE, cache=TRUE}
+```{r, results='markup', message=FALSE, cache=TRUE, fig.keep='all', fig.show='hold', dev='png'}
 findGO(exrtcga, topGO = 2, grouped = 'clustering', over.rep = TRUE)
 ```
